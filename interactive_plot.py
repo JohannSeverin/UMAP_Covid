@@ -30,9 +30,11 @@ deaths_set = deaths_dat.iloc[:, 4:]
 
 
 # Embed - Try other embeddings here
-emb = UMAP(verbose = 1).fit_transform(deaths_set)
-embed = pd.DataFrame(emb).set_index(deaths_set.index)
+# emb = UMAP(verbose = 1).fit_transform(deaths_set)
 
+# embed = pd.DataFrame(emb).set_index(deaths_set.index)
+
+embed = pd.read_pickle("embedded.dat")
 
 
 
@@ -43,7 +45,7 @@ ax_emb = ax[0]
 ax_show = ax[1]
 
 # Plot embedding
-scat_plot = ax_emb.scatter(emb[:, 0], emb[:, 1], cmap = 'plasma', c = np.log(deaths_set.iloc[:, -1]))
+scat_plot = ax_emb.scatter(embed.iloc[:, 0], embed.iloc[:, 1], cmap = 'plasma', c = np.log(deaths_set.iloc[:, -1]))
 
 
 # Dummy plot for now. But it is the markers
@@ -56,8 +58,8 @@ marked_scat = ax_emb.scatter([], [], marker = 'x', s = 60)
 
 
 def onclick(event):
-	dist_x = emb[:, 0] - event.xdata
-	dist_y = emb[:, 1] - event.ydata
+	dist_x = embed.iloc[:, 0] - event.xdata
+	dist_y = embed.iloc[:, 1] - event.ydata
 	dist_sq = pd.Series(dist_x ** 2 + dist_y ** 2)
 	dist_sq.index = deaths_set.index
 	dist_sq.sort_values(inplace = True)
