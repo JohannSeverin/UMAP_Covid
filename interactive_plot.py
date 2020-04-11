@@ -18,6 +18,7 @@ url_recovered_global = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-1
 confirmed_dat = pd.read_csv(url_confirmed_global)
 deaths_dat = pd.read_csv(url_deaths_global)
 
+deaths_dat = confirmed_dat
 
 deaths_dat.set_index("Country/Region", inplace = True)
 deaths_dat = deaths_dat.loc[~deaths_dat.index.duplicated(keep='first')]
